@@ -1,3 +1,4 @@
+import random
 import unittest
 import cards
 
@@ -23,7 +24,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(c2.rank_name, "Ace")
         
     def test_q1(self):
-        c = cards.Card(1, 12)
+        c = cards.Card(0, 12)
         self.assertEqual(c.rank_name, "Queen")
         return c.rank_name, "Queen"
 
@@ -42,7 +43,7 @@ class TestCard(unittest.TestCase):
         #return X, Y
     
     def test_q2(self):
-        c = cards.Card(1, 1)
+        c = cards.Card(1,)
         self.assertEqual(c.suit_name, "Clubs")
         return c.suit_name, "Clubs"
 
@@ -101,9 +102,9 @@ class TestCard(unittest.TestCase):
 
     def test_q5(self):
         deck = cards.Deck()
-        card = deck.deal_card()
-        assert isinstance(card, cards.Card)
-        return type(card), cards.Card
+        c=deck.deal_card(random.randint(0,51))
+        self.assertIsInstance(c, cards.Card)
+        return c, cards.Card
 
         '''
         1. fill in your test method for question 5:
@@ -121,9 +122,10 @@ class TestCard(unittest.TestCase):
     
     def test_q6(self):
         deck = cards.Deck()
-        card = deck.deal_card()
-        assert isinstance(card, cards.Card)
-        return type(card), cards.Card
+        deck_len = len(deck.cards)
+        deck.deal_card()
+        #assert isinstance(card, cards.Card)
+        return len(deck.cards), deck_len-1
 
         '''
         1. fill in your test method for question 6:

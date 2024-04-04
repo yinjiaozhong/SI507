@@ -59,7 +59,8 @@ class Deck:
         for suit in range(4):
             for rank in range(1,14):
                 card = Card(suit,rank)
-                self.cards.append(card) # appends in a sorted order
+                # appends in a sorted order
+                self.cards.append(card)
  
     def deal_card(self, i=-1):
         '''remove a card from the Deck
@@ -87,11 +88,16 @@ class Deck:
         random.shuffle(self.cards)
  
     def replace_card(self, card):
-        card_strs = [] # forming an empty list
-        for c in self.cards: # each card in self.cards (the initial list)
-            card_strs.append(c.__str__()) # appends the string that represents that card to the empty list
-        if card.__str__() not in card_strs: # if the string representing this card is not in the list already
-            self.cards.append(card) # append it to the list
+        # forming an empty list
+        card_strs = []
+        # each card in self.cards (the initial list)
+        for c in self.cards:
+            # appends the string that represents that card to the empty list
+            card_strs.append(c.__str__())
+            # if the string representing this card is not in the list already
+        if card.__str__() not in card_strs:
+            # append it to the list
+            self.cards.append(card)
     
     def sort_cards(self):
         '''returns the Deck to its original order
@@ -147,3 +153,4 @@ def print_hand(hand):
         r = c.rank_name[0]
         hand_str += r + "of" + s + ' / '
     print(hand_str)
+

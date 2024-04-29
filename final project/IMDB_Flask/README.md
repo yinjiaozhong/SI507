@@ -1,10 +1,11 @@
-SI507 Final Project 
-Name: Movie Database Management System
+SI507 Final Project: Movie Database Management System
 
-Project
+Author: Yinjiao Zhong
+Email: yinjiao@umich.edu
+Github Repository: https://github.com/yinjiaozhong/SI507
 
 Description
-This project is a web-based movie database management system built using Flask and SQLAlchemy including graph structures. It allows users to view, add, and manage movies, actors, and directors in the database.
+This project is a web-based movie database management system built using Flask and SQLAlchemy including graph structures. It allows users to view, add, and manage movies, actors, and directors in the database from https://www.imdb.com/list/ls062911411/.
 
 Libariy
 •	Flask - web framework for python
@@ -52,26 +53,33 @@ Data Sources
 
 1. IMDB Dataset
 Origin:
-   - Data URL: 
-   - Documentation: 
+   - Data URL: https://www.imdb.com/list/ls062911411/
 
 Format(s): CSV
 
 Access:
-   The IMDB dataset was obtained from [source]. The dataset is publicly available and can be downloaded directly from the provided URL.
+   The IMDB dataset was obtained from https://www.imdb.com/list/ls062911411/. The dataset is publicly available and can be downloaded directly from the provided URL.
 
 Caching:
    Caching was not used for accessing the IMDB dataset.
 
 Summary:
-   The IMDB dataset contains information about movies, including title, release date, average rating, genre, duration, gross earnings, and image URLs. The dataset comprises [number of rows] records and [number of columns] variables.
+   The IMDB dataset contains information about movies, including title, release date, average rating, genre, duration, gross earnings, and image URLs. 
+
    
 How to Run
-•	step 1:
-•	step 2:
-•	step 3:
-•	
+•	Step 1: Clone the repository and go to the code directory
+git clone https://github.com/yinjiaozhong/SI507.git
+cd final project
+cd IMDB_Flask
+cd templates
+•	Step 2: Install flask, if haven’t already
+pip install flask
+•	Step 3: Run app.py
+python app.py
+•	Step 4: Open the link in browser
+http://127.0.0.1:5000
+Note: the specific port may vary. If you can not open the link, please follow the generated prompt instead
+•	Step 5: Explore and Enjoy!
 
-
-
-![image](https://github.com/yinjiaozhong/SI507/assets/164382710/6550eda7-b88b-4b61-b425-0ce4aef7b54a)
+Demo

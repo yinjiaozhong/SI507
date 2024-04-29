@@ -61,7 +61,7 @@ class Media:
 class Track(Media):
     """ A class representing a music track."""
     
-    def __init__(self, title = "No Title", artist = "No Artist", releaseDate = "No Release Date", url = "No URL", album = "No Album", genre = "No Genre", duration = 0):
+    def __init__(self, title, artist, releaseDate, url, album = "No Album", genre = "No Genre", duration = 0):
         """
         Constructs all the necessary attributes for the Track object.
         remeber to use super().__init__(some parameters).
@@ -91,7 +91,7 @@ class Track(Media):
         self.album = album
         self.genre = genre
         self.duration = duration
-
+        #assert Track.info == "Track Title by Artist Name - Album Name (2024-01-01) [Genre] length: 300000 sec"
 
     def info(self):
         """
@@ -103,16 +103,7 @@ class Track(Media):
         For example “Hey Jude by The Beatles (1968) [Rock]”
 
         """
-        info_str = f"{self.title} by {self.artist}"
-        if self.album:
-            info_str += f" - {self.album}"
-        if self.releaseDate:
-            info_str += f" ({self.releaseDate})"
-        if self.genre:
-            info_str += f" [{self.genre}]"
-        if self.duration:
-            info_str += f" length: {self.duration} sec"
-        return info_str
+        return f"{self.title} by {self.artist} - {self.album} ({self.releaseDate}) [{self.genre}]"
         
 
     def length(self):
@@ -121,7 +112,7 @@ class Track(Media):
 
         Notice the length in the provide json might not in seconds
         """
-        return round(self.duration)
+        return round(self.duration / 1000)
         
 
     def play(self):
@@ -139,7 +130,7 @@ class Track(Media):
 class Movie(Media):
     """ A class representing a movie."""
     
-    def __init__(self, title="No Title", artist="No Artist", releaseDate="No Release Date", url="No URL", rating="No Rating", movieLength=0):
+    def __init__(self, title, artist, releaseDate, url, rating = "No Rating", movieLength = 0):
         """
         Constructs all the necessary attributes for the Movie object.
         remeber to use super().__init__(some parameters).
@@ -166,8 +157,6 @@ class Movie(Media):
         self.rating = rating
         self.movieLength = movieLength
 
-        
-
     def info(self):
         """
         Return a formatted string including the information of the movie
@@ -181,15 +170,13 @@ class Movie(Media):
         return f"{super().info()} [{self.rating}]"
         
 
-    def length(self):
+    def length(self) -> int:
         """
         Return the length of the movie in minutes(rounded to nearest minute)
 
         Notice the length in the provide json might not in minutes
         """
-        # assuming moiveLength
-        return self.movieLength
-        
+        return int(round(self.movieLength / 60000))
 
     def play(self):
         """

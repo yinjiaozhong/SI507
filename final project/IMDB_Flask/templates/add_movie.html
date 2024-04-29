@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Movie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .navbar-nav {
+            flex-direction: row;
+        }
+        .nav-link {
+            padding-right: .5rem;
+            padding-left: .5rem;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Movie DB</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('movies') }}">Movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('actors') }}">Actors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('directors') }}">Directors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_movie') }}">Add Movie</a> <!-- Placeholder link -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_actor') }}">Add Actor</a> <!-- Placeholder link -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_director') }}">Add Director</a> <!-- Placeholder link -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2>Add a New Movie</h2>
+        <form action="{{ url_for('add_movie') }}" method="post">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="mb-3">
+                <label for="release_date" class="form-label">Release Date:</label>
+                <input type="date" class="form-control" id="release_date" name="release_date">
+            </div>
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre:</label>
+                <input type="text" class="form-control" id="genre" name="genre">
+            </div>
+            <div class="mb-3">
+                <label for="duration" class="form-label">Duration:</label>
+                <input type="text" class="form-control" id="duration" name="duration">
+            </div>
+            <div class="mb-3">
+                <label for="gross_earnings" class="form-label">Gross Earnings:</label>
+                <input type="text" class="form-control" id="gross_earnings" name="gross_earnings">
+            </div>
+            <div class="mb-3">
+                <label for="image_url" class="form-label">Image URL:</label>
+                <input type="text" class="form-control" id="image_url" name="image_url">
+            </div>
+            <div class="mb-3">
+                <label for="actors" class="form-label">Actors (separate names with commas):</label>
+                <input type="text" class="form-control" id="actors" name="actors">
+            </div>
+            <div class="mb-3">
+                <label for="directors" class="form-label">Directors (separate names with commas):</label>
+                <input type="text" class="form-control" id="directors" name="directors">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Movie</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

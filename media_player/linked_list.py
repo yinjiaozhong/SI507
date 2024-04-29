@@ -1,3 +1,5 @@
+from typing import Any
+
 class Node:
     """
     A node in a doubly linked list.
@@ -17,7 +19,7 @@ class Node:
         The data to be stored in the node (default is None).
     """
     
-    def __init__(self, data = None):
+    def __init__(self, data: Any= None):
         self.data = data
         self.next = None
         self.prev = None
@@ -91,7 +93,7 @@ class LinkedList:
         self.dummyTail.prev = self.dummyHead
         self.size = 0
     
-    def get(self, index: int) -> int:
+    def get(self, index: int) -> Any:
         """
         Retrieve the data at the specified index in the linked list.
         If the index is invalid, ie out of range, return None.
@@ -114,7 +116,7 @@ class LinkedList:
             current = current.next
         return current.data
 
-    def appendLeft(self, data):
+    def appendLeft(self, data: Any):
         """
         Create a new node, and assign the data to the new node.
         Add the node with the given data at the beginning of the linked list.
@@ -140,7 +142,7 @@ class LinkedList:
 
 
 
-    def append(self, data):
+    def append(self, data: Any):
         """
         Add a node with the given data at the end of the linked list.
         Reset the positional relation(the next and prev attribute) of three
@@ -163,7 +165,7 @@ class LinkedList:
         self.dummyTail.prev = new_node
         self.size += 1
     
-    def popLeft(self):
+    def popLeft(self) -> Any:
         """
         Remove and return the data from the beginning of the linked list.
         Decrease the size by one.
@@ -186,7 +188,7 @@ class LinkedList:
         self.size -= 1
         return removed_data
 
-    def pop(self):
+    def pop(self) -> Any:
         """
         Remove and return the data from the end of the linked list.
         Decrease the size by one.
@@ -204,10 +206,11 @@ class LinkedList:
             return None
         removed_data = self.dummyTail.prev.data
         self.dummyTail.prev = self.dummyTail.prev.prev
+        self.dummyTail.prev.next = self.dummyTail
         self.size -= 1
         return removed_data
 
-    def addAtIndex(self, index: int, data: int):
+    def addAtIndex(self, index: int, data: Any):
         """
         Add a node with the given data at the specified index in the linked list.
         You could assume the only illegal input is an out of range index. 
@@ -227,18 +230,19 @@ class LinkedList:
         """
         if index < 0 or index > self.size:
             return False
-        if index == self.size:
-            self.append(data)
-        else:
-            new_node = Node(data)
-            current = self.dummyHead
-            for _ in range(index):
-                current = current.next
-            new_node.next = current.next
-            new_node.prev = current
-            current.next.prev = current
-            current.next = new_node
-            self.size += 1
+        #current = self.dummyHead
+        #if index == self.size:
+            #self.append(data)
+            #return True
+        current = self.dummyHead
+        for _ in range(index):
+            current = current.next
+        new_node = Node(data)
+        new_node.next = current.next
+        new_node.prev = current
+        current.next.prev = new_node
+        current.next = new_node
+        self.size += 1
         return True
 
 
@@ -263,13 +267,11 @@ class LinkedList:
         """
         if index < 0 or index > self.size:
             return False
-        current = self.dummyHead.next
+        current = self.dummyHead
         for _ in range(index):
             current = current.next
-
-        current.prev.next = current.next
-        current.next.prev = current.prev
-        del current
+        current.next = current.next.next
+        current.next.prev = current
         self.size -= 1
         return True
 
@@ -287,11 +289,11 @@ class LinkedList:
         """
         if self.size == 0:
             print("Link list is empty.")
-        else:
-            current = self.dummyHead.next
-            while current != self.dummyTail:
-                print(current.data)
-                current = current.next
+            return
+        current = self.dummyHead.next
+        while current != self.dummyTail:
+            print(current.data)
+            current = current.next
 
     def printFromBack(self):
         """
@@ -301,11 +303,11 @@ class LinkedList:
         """
         if self.size == 0:
             print("Link list is empty.")
-        else:
-            current = self.dummyTail.prev
-            while current != self.dummyHead:
-                print(current.data)
-                current = current.prev
+            return
+        current = self.dummyTail.prev
+        while current != self.dummyHead:
+            print(current.data)
+            current = current.prev
 
 
 
@@ -337,7 +339,7 @@ class LinkedList:
         return node.prev is None or node.next is None
 
     
-    def getFront(self) -> int:
+    def getFront(self) -> Any:
         """
         Returns the data from the first no dummy node in the linked list.
 
@@ -346,10 +348,12 @@ class LinkedList:
         data or None
             The data of the first node in the list, or None if the list is empty.
         """
-        return self.dummyHead.next.data if self.size > 0 else None
+        if self.size == 0:
+            return None
+        return self.dummyHead.next.data
 
 
-    def getBack(self) -> int:
+    def getBack(self) -> Any:
         """
         Returns the data from the last non dummy node in the linked list.
 
@@ -358,7 +362,9 @@ class LinkedList:
         data or None
             The data of the last node in the list, or None if the list is empty.
         """
-        return self.dummyTail.prev.data if self.size > 0 else None
+        if self.size == 0:
+            return None
+        return self.dummyTail.prev.data
 
     
     def getSize(self) -> int:

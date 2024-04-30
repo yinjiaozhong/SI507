@@ -9,9 +9,6 @@ global graph
 app = Flask(__name__)
 # app.use_reloader = True
 app.secret_key = '55344663'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/zhongyinjiao/Desktop/SI 507/final project/movies.db'
-# # app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # db = SQLAlchemy(app)
 
@@ -34,11 +31,11 @@ app.secret_key = '55344663'
 #     id = db.Column(db.Integer, primary_key=True)
 #     title = db.Column(db.String, nullable=False)
 #     release_date = db.Column(db.DateTime)  
-#     average_rating = db.Column(db.Float)
-#     genre = db.Column(db.String)
-#     duration = db.Column(db.String)  #
-#     gross_earnings = db.Column(db.String)  #
-#     image = db.Column(db.String)  #
+#     average_rating = db.Column(db.Float)  # 平均评分
+#     genre = db.Column(db.String)  # 新增：电影类型
+#     duration = db.Column(db.String)  # 新增：持续时间
+#     gross_earnings = db.Column(db.String)  # 新增：总收益
+#     image = db.Column(db.String)  # 新增：电影海报
 #     actors = db.relationship('Actor', secondary='movie_actors', back_populates='movies')
 #     directors = db.relationship('Director', secondary='movie_directors', back_populates='movies')
 
@@ -97,13 +94,13 @@ class Graph:
         self.edges = {}
 
     def add_node(self, node):
-        """Add a new node"""
+        """添加一个新节点"""
         if node.id not in self.nodes:
             self.nodes[node.id] = node
             self.edges[node.id] = []
 
     def add_edge(self, from_node_id, to_node_id):
-        """Adds an edge to a node that points to another node"""
+        """为节点添加一条边，指向另一个节点"""
         if from_node_id in self.edges:
             self.edges[from_node_id].append(to_node_id)
             
@@ -111,7 +108,7 @@ class Graph:
             self.edges[to_node_id] = []
             
     def to_json(self):
-        """Convert the graph structure to JSON format"""
+        """将图结构转换为 JSON 格式"""
         return json.dumps({"nodes": self.nodes, "edges": self.edges}, indent=4)
     
 def build_graph():
@@ -186,7 +183,7 @@ def build_graph():
         for director in directors:
             graph.add_node(Directors(director.id, director.name, director.director))
 
-        # Suppose that the relationship between the movie, the actor and the director are also taken from the database
+        # 假设电影、演员和导演之间的关系也是从数据库中获取
         for movie in movies:
             for actor in movie.actors:
                 graph.add_edge(movie.id, actor.id)
@@ -197,8 +194,6 @@ def build_graph():
 
     return graph
 
-
-initialized = False
 
 
 @app.before_first_request
@@ -262,15 +257,24 @@ def movie_details(movie_id):
 def add_movie():
     if request.method == 'POST':
         title = request.form['title']
-        release_date = request.form['release_date']
+        # convert string to datetime
+        release_date = datetime.strptime(request.form['release_date'], '%Y-%m-%d')
         genre = request.form['genre']
         duration = request.form['duration']
         gross_earnings = request.form['gross_earnings']
         image_url = request.form['image_url']
         actor_names = [name.strip() for name in request.form['actors'].split(',')]
         director_names = [name.strip() for name in request.form['directors'].split(',')]
-
-        movie = Movies(title=title, release_date=release_date, genre=genre,
+        movie_id = random.randint(1000, 9999)
+        while movie_id in graph.nodes:
+            movie_id = random.randint(1000, 9999)
+        
+        average_rating = request.form['average_rating']
+        if average_rating:
+            average_rating = float(average_rating)
+        else:
+            average_rating = None
+        movie = Movies(movie_id, title=title, release_date=release_date, average_rating=average_rating, genre=genre,
                       duration=duration, gross_earnings=gross_earnings, image=image_url)
 
         for name in actor_names:
@@ -313,7 +317,7 @@ def add_movie():
                     break
 
         graph.add_node(movie)
-        return redirect(url_for('list_movies'))
+        return redirect(url_for('movies'))
 
     return render_template('add_movie.html')
 

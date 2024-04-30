@@ -58,7 +58,7 @@ class Director(Base):
 # %%
 
 # Database setup
-engine = create_engine('sqlite:///movies.db')  # Replace with database URI
+engine = create_engine('sqlite:///movies.db')  # Replace with your actual database URI
 Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
